@@ -6,6 +6,8 @@ import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.ControllerException;
 import javafx.application.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -58,6 +60,7 @@ public class ConsumerContainer extends Application{
 		
 		VBox vBox = new VBox();
 		GridPane gridPane = new GridPane();
+		ObservableList<String> observbleList = FXCollections.observableArrayList();
 		ListView<String> listViewMesseges = new ListView<String>();
 		gridPane.add(listViewMesseges, 0, 0);
 		vBox.setPadding(new Insets(10));
@@ -69,6 +72,13 @@ public class ConsumerContainer extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
+		buttonBuyer.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				String livre = textFieldLivre.getText();
+				observbleList.add(livre);
+			}
+		});
 	}
 
 }
