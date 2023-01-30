@@ -6,8 +6,18 @@ import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.ControllerException;
 import javafx.application.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 public class ConsumerContainer extends Application{
 
@@ -34,9 +44,31 @@ public class ConsumerContainer extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Consumateur");
 		BorderPane borderPane = new BorderPane();
+		HBox hBox = new HBox(); 
+		hBox.setPadding(new Insets(10));
+		hBox.setSpacing(10);
+		
+		Label labelLivre = new Label("Livre: ");
+		TextField textFieldLivre = new TextField();
+		Button buttonBuyer = new Button("Buyer");
+		hBox.getChildren().add(labelLivre);
+		hBox.getChildren().add(textFieldLivre);
+		hBox.getChildren().add(buttonBuyer);
+		borderPane.setTop(hBox);
+		
+		VBox vBox = new VBox();
+		GridPane gridPane = new GridPane();
+		ListView<String> listViewMesseges = new ListView<String>();
+		gridPane.add(listViewMesseges, 0, 0);
+		vBox.setPadding(new Insets(10));
+		vBox.setSpacing(10);
+		vBox.getChildren().add(gridPane);
+		borderPane.setCenter(vBox);
+		
 		Scene scene = new Scene(borderPane, 400,500);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
 	}
 
 }
