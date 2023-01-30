@@ -12,7 +12,7 @@ public class ConsumerAgent extends Agent{
 	@Override
 	protected void beforeMove() {
 		try {
-			System.out.println("Before move... the : " + this.getContainerController().getContainerName());
+			System.out.println("Before move.... the : " + this.getContainerController().getContainerName());
 		} catch (ControllerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
