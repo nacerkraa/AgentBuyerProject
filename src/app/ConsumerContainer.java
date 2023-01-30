@@ -5,8 +5,11 @@ import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.ControllerException;
-
-public class ConsumerContainer {
+import javafx.application.*;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+public class ConsumerContainer extends Application{
 
 	public static void main(String[] args) {
 		try {
@@ -20,10 +23,20 @@ public class ConsumerContainer {
 			AgentController agentController = container.createNewAgent
 					("Consumer-1", "app.agents.ConsumerAgent", new Object[] {book});
 			agentController.start();
+			launch(ConsumerContainer.class);
 		} catch (ControllerException e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		primaryStage.setTitle("Consumateur");
+		BorderPane borderPane = new BorderPane();
+		Scene scene = new Scene(borderPane, 400,500);
+		primaryStage.setScene(scene);
+		primaryStage.show();
 	}
 
 }
