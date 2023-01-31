@@ -3,6 +3,8 @@ package app.agents;
 import app.ConsumerContainer;
 import jade.core.AID;
 import jade.core.Agent;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.domain.introspection.AddedBehaviour;
 import jade.gui.GuiAgent;
 import jade.gui.GuiEvent;
 import jade.lang.acl.ACLMessage;
@@ -16,6 +18,20 @@ public class ConsumerAgent extends GuiAgent{
 		gui = (ConsumerContainer) getArguments()[0];
 		gui.setConsumerAgent(this);
 		System.out.println("Run the agent : " + this.getAID().getName());
+		addBehaviour(new CyclicBehaviour() {
+			
+			@Override
+			public void action() {
+				ACLMessage message = receive();
+				if (message != null) {
+					System.out.println("Reciption d'un message "+ message.getContent());
+					GuiEvent guiEvent = new GuiEvent(this, 1);
+					guiEvent.addParameter(message.getContent());
+					gui.viewMessage(guiEvent);
+				}
+				
+			}
+		});
 	}
 	
 	@Override

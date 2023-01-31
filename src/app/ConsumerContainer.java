@@ -26,14 +26,10 @@ import javafx.stage.Stage;
 public class ConsumerContainer extends Application{
 	
 	private ConsumerAgent consumerAgent;
+	ObservableList<String> observbleList;
 	
-	public ConsumerAgent getConsumerAgent() {
-		return consumerAgent;
-	}
-
-	public void setConsumerAgent(ConsumerAgent consumerAgent) {
-		this.consumerAgent = consumerAgent;
-	}
+	
+	
 
 	public static void main(String[] args) {
 		launch(ConsumerContainer.class);
@@ -75,7 +71,7 @@ public class ConsumerContainer extends Application{
 		
 		VBox vBox = new VBox();
 		GridPane gridPane = new GridPane();
-		ObservableList<String> observbleList = FXCollections.observableArrayList();
+		observbleList = FXCollections.observableArrayList();
 		ListView<String> listViewMesseges = new ListView<String>(observbleList);
 		gridPane.add(listViewMesseges, 0, 0);
 		vBox.setPadding(new Insets(10));
@@ -96,6 +92,19 @@ public class ConsumerContainer extends Application{
 				consumerAgent.onGuiEvent(guiEvent);
 			}
 		});
+	}
+	
+	public ConsumerAgent getConsumerAgent() {
+		return consumerAgent;
+	}
+
+	public void setConsumerAgent(ConsumerAgent consumerAgent) {
+		this.consumerAgent = consumerAgent;
+	}
+	
+	public void viewMessage(GuiEvent guiEvent) {
+		String message = guiEvent.getParameter(0).toString();
+		observbleList.add(message);
 	}
 
 }
