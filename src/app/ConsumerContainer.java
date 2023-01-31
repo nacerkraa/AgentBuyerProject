@@ -61,7 +61,7 @@ public class ConsumerContainer extends Application{
 		VBox vBox = new VBox();
 		GridPane gridPane = new GridPane();
 		ObservableList<String> observbleList = FXCollections.observableArrayList();
-		ListView<String> listViewMesseges = new ListView<String>();
+		ListView<String> listViewMesseges = new ListView<String>(observbleList);
 		gridPane.add(listViewMesseges, 0, 0);
 		vBox.setPadding(new Insets(10));
 		vBox.setSpacing(10);
