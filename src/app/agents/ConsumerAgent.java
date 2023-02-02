@@ -72,7 +72,7 @@ public class ConsumerAgent extends GuiAgent{
 			ACLMessage aclMessage = new ACLMessage(ACLMessage.REQUEST);
 			String livre = guiEvent.getParameter(0).toString();
 			aclMessage.setContent(livre);
-			aclMessage.addReceiver(new AID("rma", AID.ISLOCALNAME));
+			aclMessage.addReceiver(new AID("Buyer", AID.ISLOCALNAME));
 			send(aclMessage);
 		}
 	}
