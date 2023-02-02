@@ -1,5 +1,6 @@
 package app.agents;
 
+import app.BuyerContainer;
 import app.ConsumerContainer;
 import jade.core.AID;
 import jade.core.Agent;
@@ -12,28 +13,28 @@ import jade.lang.acl.MessageTemplate;
 import jade.wrapper.ControllerException;
 
 public class BuyerAgent extends GuiAgent{
-	private ConsumerContainer gui;
+	private BuyerContainer gui;
 	
 	@Override
 	protected void setup() {
 		
-		gui = (ConsumerContainer) getArguments()[0];
-		gui.setConsumerAgent(this);
+		gui = (BuyerContainer) getArguments()[0];
+		gui.setBuyerAgent(this);
 		System.out.println("Run the agent : " + this.getAID().getName());
 		addBehaviour(new CyclicBehaviour() {
 			
 			@Override
 			public void action() {
-				MessageTemplate messageTemplate = MessageTemplate.or(
-						MessageTemplate.MatchPerformative(ACLMessage.REQUEST),
-						MessageTemplate.MatchPerformative(ACLMessage.REFUSE)
-						);
+				MessageTemplate messageTemplate = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
 				ACLMessage message = receive(messageTemplate);
 				if (message != null) {
 					System.out.println("Reciption d'un message "+ message.getContent());
 					GuiEvent guiEvent = new GuiEvent(this, 1);
 					guiEvent.addParameter(message.getContent());
 					gui.viewMessage(guiEvent);
+					/*
+					 * Book Buyer Operation
+					 */
 				}
 				
 			}
@@ -68,12 +69,5 @@ public class BuyerAgent extends GuiAgent{
 	@Override
 	public void onGuiEvent(GuiEvent guiEvent) {
 		
-		if (guiEvent.getType() == 1 ) {
-			ACLMessage aclMessage = new ACLMessage(ACLMessage.REQUEST);
-			String livre = guiEvent.getParameter(0).toString();
-			aclMessage.setContent(livre);
-			aclMessage.addReceiver(new AID("rma", AID.ISLOCALNAME));
-			send(aclMessage);
-		}
 	}
 }
