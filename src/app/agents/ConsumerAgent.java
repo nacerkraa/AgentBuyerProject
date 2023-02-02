@@ -8,6 +8,7 @@ import jade.domain.introspection.AddedBehaviour;
 import jade.gui.GuiAgent;
 import jade.gui.GuiEvent;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import jade.wrapper.ControllerException;
 
 public class ConsumerAgent extends GuiAgent{
@@ -15,6 +16,7 @@ public class ConsumerAgent extends GuiAgent{
 	
 	@Override
 	protected void setup() {
+		
 		gui = (ConsumerContainer) getArguments()[0];
 		gui.setConsumerAgent(this);
 		System.out.println("Run the agent : " + this.getAID().getName());
@@ -22,7 +24,11 @@ public class ConsumerAgent extends GuiAgent{
 			
 			@Override
 			public void action() {
-				ACLMessage message = receive();
+				MessageTemplate messageTemplate = MessageTemplate.or(
+						MessageTemplate.MatchPerformative(ACLMessage.REQUEST),
+						MessageTemplate.MatchPerformative(ACLMessage.REFUSE)
+						);
+				ACLMessage message = receive(messageTemplate);
 				if (message != null) {
 					System.out.println("Reciption d'un message "+ message.getContent());
 					GuiEvent guiEvent = new GuiEvent(this, 1);
