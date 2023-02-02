@@ -1,5 +1,6 @@
 package app;
 
+import app.agents.BuyerAgent;
 import app.agents.ConsumerAgent;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
@@ -25,7 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 public class BuyerContainer extends Application{
 	
-	private ConsumerAgent consumerAgent;
+	private BuyerAgent buyerAgent;
 	ObservableList<String> observbleList;
 	
 	
@@ -43,7 +44,7 @@ public class BuyerContainer extends Application{
 			AgentContainer container = runtime.createAgentContainer(profileImpl);
 			/* Create and agent and add it to the container */
 			AgentController agentController = container.createNewAgent
-					("Consumer-1", "app.agents.ConsumerAgent", new Object[] {this});
+					("Buyer", "app.agents.BuyerAgent", new Object[] {this});
 			agentController.start();
 			
 		} catch (ControllerException e) {
@@ -55,19 +56,8 @@ public class BuyerContainer extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		StartContainer();
-		primaryStage.setTitle("Consumateur");
+		primaryStage.setTitle("Buyer");
 		BorderPane borderPane = new BorderPane();
-		HBox hBox = new HBox(); 
-		hBox.setPadding(new Insets(10));
-		hBox.setSpacing(10);
-		
-		Label labelLivre = new Label("Livre: ");
-		TextField textFieldLivre = new TextField();
-		Button buttonBuyer = new Button("Buyer");
-		hBox.getChildren().add(labelLivre);
-		hBox.getChildren().add(textFieldLivre);
-		hBox.getChildren().add(buttonBuyer);
-		borderPane.setTop(hBox);
 		
 		VBox vBox = new VBox();
 		GridPane gridPane = new GridPane();
@@ -83,25 +73,16 @@ public class BuyerContainer extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
-		buttonBuyer.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				String livre = textFieldLivre.getText();
-				GuiEvent guiEvent = new GuiEvent(this, 1);
-				guiEvent.addParameter(livre);
-				consumerAgent.onGuiEvent(guiEvent);
-			}
-		});
 	}
 	
-	public ConsumerAgent getConsumerAgent() {
-		return consumerAgent;
+	public BuyerAgent getBuyerAgent() {
+		return buyerAgent;
 	}
 
-	public void setConsumerAgent(ConsumerAgent consumerAgent) {
-		this.consumerAgent = consumerAgent;
+	public void setBuyerAgent(BuyerAgent buyerAgent) {
+		this.buyerAgent = buyerAgent;
 	}
-	
+
 	public void viewMessage(GuiEvent guiEvent) {
 		String message = guiEvent.getParameter(0).toString();
 		observbleList.add(message);
